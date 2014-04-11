@@ -1,3 +1,3 @@
-import mailboxer-python
 
-# py.test style tests here
+def test_get_mailboxes(mailboxer):
+    assert len(mailboxer.get_mailboxes()) == 0

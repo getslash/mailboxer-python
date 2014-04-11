@@ -2,6 +2,8 @@ import json
 import requests
 from urlobject import URLObject as URL
 
+from .query import Query
+
 
 class Mailboxer(object):
 
@@ -15,6 +17,9 @@ class Mailboxer(object):
 
     def get_emails(self, address):
         return self.get_mailbox(address).get_emails()
+
+    def get_mailboxes(self):
+        return Query(self, self.url.add_path("mailboxes"), Mailbox)
 
     def get_mailbox(self, address):
         return Mailbox(self, address)
