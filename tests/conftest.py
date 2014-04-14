@@ -33,7 +33,10 @@ def db_engine(request):
 
         subprocess.check_call("createdb mailboxer", shell=True)
 
+    models.db.session.close()
+    models.db.drop_all()
     models.db.create_all()
+
 
 @pytest.fixture(scope="session")
 def mailboxer_url(request, db_engine):
@@ -48,3 +51,15 @@ def mailboxer_url(request, db_engine):
 @pytest.fixture
 def mailboxer(mailboxer_url):
     return Mailboxer(mailboxer_url)
+
+@pytest.fixture(
+    params=[10]
+    )
+def num_objects(request):
+    return request.param
+
+@pytest.fixture
+def mailboxes(mailboxer, num_objects):
+    return [
+        mailboxer.create_mailbox("mailbox{0}@mailboxer.com".format(i))
+        for i in range(num_objects)]

@@ -18,8 +18,8 @@ class Mailboxer(object):
     def get_emails(self, address):
         return self.get_mailbox(address).get_emails()
 
-    def get_mailboxes(self):
-        return Query(self, self.url.add_path("mailboxes"), Mailbox)
+    def get_mailboxes(self, **kwargs):
+        return Query(self, self.url.add_path("mailboxes"), Mailbox, **kwargs)
 
     def get_mailbox(self, address):
         return Mailbox(self, address)
@@ -41,6 +41,10 @@ class Mailbox(object):
         self.mailboxer = mailboxer
         self.address = address
         self.url = self.mailboxer.url.add_path("mailboxes").add_path(self.address)
+
+    @classmethod
+    def from_query_json(cls, mailboxer, json):
+        return cls(mailboxer, json["address"])
 
     def get_emails(self):
         return self.mailboxer._get_paged(self.url.add_path("emails"), Email)
