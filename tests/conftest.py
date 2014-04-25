@@ -18,11 +18,11 @@ from flask_app.app import app
 from flask_app import models
 
 def pytest_addoption(parser):
-    parser.addoption("--no-setup-db", action="store_true", default=False)
+    parser.addoption("--setup-db", action="store_true", default=False)
 
 @pytest.fixture(scope="session")
 def db_engine(request):
-    if not request.config.getoption("--no-setup-db"):
+    if request.config.getoption("--setup-db"):
         tmpdir = tempfile.mkdtemp()
         subprocess.check_call("pg_ctl init -D {0} -w".format(tmpdir), shell=True)
         subprocess.check_call("pg_ctl start -D {0} -w".format(tmpdir), shell=True)

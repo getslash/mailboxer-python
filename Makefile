@@ -4,7 +4,7 @@ test: env
 	.env/bin/py.test -x tests
 
 travis_test: env
-	.env/bin/py.test --no-setup-db
+	.env/bin/py.test
 
 env: .env/.up-to-date
 
