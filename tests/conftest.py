@@ -59,6 +59,12 @@ def num_objects(request):
     return request.param
 
 @pytest.fixture
+def mailbox(request, mailboxer):
+    returned = mailboxer.create_mailbox("mailbox@mailboxer.com")
+    request.addfinalizer(returned.delete)
+    return returned
+
+@pytest.fixture
 def mailboxes(mailboxer, num_objects):
     return [
         mailboxer.create_mailbox("mailbox{0}@mailboxer.com".format(i))

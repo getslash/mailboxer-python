@@ -25,8 +25,10 @@ class Mailboxer(object):
         return Mailbox(self, address)
 
     def _post(self, url, data):
-        resp = requests.post(url, data=json.dumps(data),
-                             headers={"Content-type": "application/json"})
+        returned = requests.post(url, data=json.dumps(data),
+                      headers={"Content-type": "application/json"})
+        returned.raise_for_status()
+        return returned
 
     def _get_paged(self, url, obj):
         return [obj(data) for data in requests.get(url).json()["result"]]
@@ -48,6 +50,9 @@ class Mailbox(object):
 
     def get_emails(self):
         return self.mailboxer._get_paged(self.url.add_path("emails"), Email)
+
+    def delete(self):
+        requests.delete(self.url).raise_for_status()
 
 class Email(object):
 
