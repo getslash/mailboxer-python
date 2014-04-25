@@ -4,7 +4,7 @@ class Query(object):
 
     _metadata = None
 
-    def __init__(self, client, url, objtype, page_size=1000):
+    def __init__(self, client, url, objtype, page_size=100):
         super(Query, self).__init__()
         self.client = client
         self.url = url.set_query_param("page_size", str(page_size))
