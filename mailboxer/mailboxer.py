@@ -15,8 +15,11 @@ class Mailboxer(object):
         self._post(self.url.add_path("mailboxes"), {"address": address})
         return Mailbox(self, address)
 
-    def get_emails(self, address):
-        return self.get_mailbox(address).get_emails()
+    def delete_mailbox(self, address):
+        return self.get_mailbox(address).delete()
+
+    def get_emails(self, address, unread = False):
+        return self.get_mailbox(address).get_emails(unread)
 
     def get_mailboxes(self, **kwargs):
         return Query(self, self.url.add_path("mailboxes"), Mailbox, **kwargs)
