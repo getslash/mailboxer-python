@@ -48,8 +48,9 @@ class Mailbox(object):
     def from_query_json(cls, mailboxer, json):
         return cls(mailboxer, json["address"])
 
-    def get_emails(self):
-        return self.mailboxer._get_paged(self.url.add_path("emails"), Email)
+    def get_emails(self, unread = False):
+        url = self.url.add_path("unread_emails") if unread else self.url.add_path("emails")
+        return self.mailboxer._get_paged(url, Email)
 
     def delete(self):
         requests.delete(self.url).raise_for_status()
