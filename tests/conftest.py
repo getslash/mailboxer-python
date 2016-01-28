@@ -14,7 +14,7 @@ from mailboxer import Mailboxer
 sys.path.insert(0, os.path.join(
     os.path.abspath(os.path.dirname(__file__)),
     "..", ".env", "mailboxer"))
-from flask_app.app import app
+from flask_app.app import create_app
 from flask_app import models
 
 def pytest_addoption(parser):
@@ -26,6 +26,7 @@ def db_engine(request):
         tmpdir = tempfile.mkdtemp()
         subprocess.check_call("pg_ctl init -D {0} -w".format(tmpdir), shell=True)
         subprocess.check_call("pg_ctl start -D {0} -w".format(tmpdir), shell=True)
+
         @request.addfinalizer
         def finalize():
             subprocess.check_call("pg_ctl stop -D {0} -w -m immediate".format(tmpdir), shell=True)
@@ -33,14 +34,15 @@ def db_engine(request):
 
         subprocess.check_call("createdb mailboxer", shell=True)
 
-    models.db.session.close()
-    models.db.drop_all()
-    models.db.create_all()
+    with create_app().app_context():
+        models.db.session.close()
+        models.db.drop_all()
+        models.db.create_all()
 
 
 @pytest.fixture(scope="session")
 def mailboxer_url(request, db_engine):
-    loopback = FlaskLoopback(app)
+    loopback = FlaskLoopback(create_app())
     hostname = str(uuid.uuid1())
     loopback.activate_address((hostname, 80))
     @request.addfinalizer
