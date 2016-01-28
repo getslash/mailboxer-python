@@ -15,8 +15,11 @@ class Mailboxer(object):
         self._post(self.url.add_path("mailboxes"), {"address": address})
         return Mailbox(self, address)
 
-    def get_emails(self, address):
-        return self.get_mailbox(address).get_emails()
+    def delete_mailbox(self, address):
+        return self.get_mailbox(address).delete()
+
+    def get_emails(self, address, unread = False):
+        return self.get_mailbox(address).get_emails(unread)
 
     def get_mailboxes(self, **kwargs):
         return Query(self, self.url.add_path("mailboxes"), Mailbox, **kwargs)
@@ -48,8 +51,9 @@ class Mailbox(object):
     def from_query_json(cls, mailboxer, json):
         return cls(mailboxer, json["address"])
 
-    def get_emails(self):
-        return self.mailboxer._get_paged(self.url.add_path("emails"), Email)
+    def get_emails(self, unread = False):
+        url = self.url.add_path("unread_emails") if unread else self.url.add_path("emails")
+        return self.mailboxer._get_paged(url, Email)
 
     def delete(self):
         requests.delete(self.url).raise_for_status()
