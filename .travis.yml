@@ -1,13 +1,21 @@
 language: python
 sudo: false
 addons:
-  postgresql: "9.4"
+  postgresql: '9.4'
 before_script:
-  - psql -c 'create database mailboxer;' -U postgres
+- psql -c 'create database mailboxer;' -U postgres
 python:
-  - "2.7"
-  - "3.3"
-  - "3.4"
-  - "3.5"
-script: 
-  - "make travis_test"
+- '2.7'
+- '3.3'
+- '3.4'
+- '3.5'
+script:
+- make travis_test
+deploy:
+  provider: pypi
+  user: vmalloc
+  password:
+    secure: J1fuMFc2paSJ7rxHt9xaKJH+S0EEAsHRDweKlGuaZgQCCYcMGjc+M5TEtp7ffWGZoFLnVoxsPHD/Ez42YzStkMzp9p8XWifKYwy8mAnc1YgLuFcBOzdwWFruooWPqgUG2MCwBif5NhBXHFW4SZ4sKAtE/e0YjepR0sU+8Otk6mM=
+  on:
+    tags: true
+    repo: getslash/mailboxer-python
