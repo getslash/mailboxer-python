@@ -27,6 +27,9 @@ class Mailboxer(object):
     def get_mailbox(self, address):
         return Mailbox(self, address)
 
+    def does_mailbox_exist(self, address):
+        return Mailbox(self, address).does_exist()
+
     def _post(self, url, data):
         returned = requests.post(url, data=json.dumps(data),
                       headers={"Content-type": "application/json"})
@@ -54,6 +57,14 @@ class Mailbox(object):
     def get_emails(self, unread = False):
         url = self.url.add_path("unread_emails") if unread else self.url.add_path("emails")
         return self.mailboxer._get_paged(url, Email)
+
+    def does_exist(self):
+        url = self.url.add_path("emails")
+        response = requests.get(url)
+        if(response.status_code == requests.codes.not_found):
+            return False
+        response.raise_for_status()
+        return True
 
     def delete(self):
         requests.delete(self.url).raise_for_status()
