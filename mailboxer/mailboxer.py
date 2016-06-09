@@ -37,7 +37,9 @@ class Mailboxer(object):
         return returned
 
     def _get_paged(self, url, obj):
-        return [obj(data) for data in requests.get(url).json()["result"]]
+        response = requests.get(url)
+        response.raise_for_status()
+        return [obj(data) for data in response.json()["result"]]
 
     def _mailbox_url(self, address):
         return self.url.add_path("mailboxes").add_path(address)
