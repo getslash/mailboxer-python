@@ -1,10 +1,7 @@
 
-![Build Status] (https://secure.travis-ci.org/vmalloc/mailboxer-python.png )
+![Build Status] (https://secure.travis-ci.org/getslash/mailboxer-python.png )
 
-
-![Downloads] (https://pypip.in/d/mailboxer-python/badge.png )
-
-![Version] (https://pypip.in/v/mailboxer-python/badge.png )
+![Version] (https://img.shields.io/pypi/v/mailboxer-python.svg )
 
 Overview
 ========
