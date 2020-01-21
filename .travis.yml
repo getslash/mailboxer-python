@@ -3,14 +3,13 @@ sudo: false
 addons:
   postgresql: '9.4'
 before_script:
-- psql -c 'create database mailboxer;' -U postgres
+  - psql -c 'create database mailboxer;' -U postgres
 python:
-- '2.7'
-- '3.3'
-- '3.4'
-- '3.5'
+  - '3.6'
+  - '3.7'
+  - '3.8'
 script:
-- make travis_test
+  - make travis_test
 deploy:
   provider: pypi
   user: vmalloc
