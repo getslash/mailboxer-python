@@ -9,7 +9,8 @@ python:
   - '3.7'
   - '3.8'
 script:
-  - make travis_test
+  - pip install .[testing]
+
 deploy:
   provider: pypi
   user: vmalloc
