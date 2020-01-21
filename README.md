@@ -21,7 +21,7 @@ Getting Started
 2. Start using it:
 
 	```
-	>>> from mailboxer improt Mailboxer
+	>>> from mailboxer import Mailboxer
 	>>> m = Mailboxer("http://my.mailboxer.hostname")
 	>>> mailbox = m.create_mailbox("recipient@somedomain.com")
 	>>> emails = mailbox.get_emails()
