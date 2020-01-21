@@ -8,9 +8,9 @@ python:
   - '3.6'
   - '3.7'
   - '3.8'
-script:
+install:
   - pip install .[testing]
-
+script: pytest tests
 deploy:
   provider: pypi
   user: vmalloc
