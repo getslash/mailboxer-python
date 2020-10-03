@@ -12,9 +12,10 @@ _INSTALL_REQUIRES = [
 
 setup(name="mailboxer-python",
       classifiers = [
-          "Programming Language :: Python :: 2.6",
-          "Programming Language :: Python :: 2.7",
-          "Programming Language :: Python :: 3.3",
+          "Programming Language :: Python :: 3.6",
+          "Programming Language :: Python :: 3.7",
+          "Programming Language :: Python :: 3.8",
+          "Programming Language :: Python :: 3.9",
           ],
       description="Client library for Mailboxer",
       license="BSD3",
