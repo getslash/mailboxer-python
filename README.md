@@ -1,7 +1,8 @@
 
-![Build Status] (https://secure.travis-ci.org/getslash/mailboxer-python.png )
-
-![Version] (https://img.shields.io/pypi/v/mailboxer-python.svg )
+|-----------------------|-----------------------------------------------------------------------------------------|
+| Build Status          | ![Build Status](https://secure.travis-ci.org/getslash/mailboxer-python.png)             |
+| Supported Versions    | ![Supported Versions](https://img.shields.io/pypi/pyversions/mailboxer-python.svg)      |
+| Latest Version        | ![Latest Version](https://img.shields.io/pypi/v/mailboxer-python.svg)                   |
 
 Overview
 ========
@@ -31,7 +32,7 @@ Documentation
 =============
 
 ** Coming Soon **
-										   
+
 
 Licence
 =======
