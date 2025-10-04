@@ -9,8 +9,8 @@ from mailboxer import Mailboxer
 from .flask_app import create_app, app_initializations
 
 
-@pytest.fixture(scope="session")
-def mailboxer_url(request):
+@pytest.fixture(scope="session", name="mailboxer_url")
+def mailboxer_url_fx():
     app = create_app()
     loopback = FlaskLoopback(app)
     hostname = str(uuid.uuid1())
@@ -22,15 +22,15 @@ def mailboxer_url(request):
         loopback.deactivate_address((hostname, port))
 
 
-@pytest.fixture
-def mailboxer(mailboxer_url):
+@pytest.fixture(name="mailboxer")
+def mailboxer_fx(mailboxer_url):
     return Mailboxer(mailboxer_url)
 
-@pytest.fixture(
-    params=[10]
-    )
-def num_objects(request):
+
+@pytest.fixture(params=[10], name="num_objects")
+def num_objects_fx(request):
     return request.param
+
 
 @pytest.fixture
 def mailbox(request, mailboxer):
@@ -38,8 +38,10 @@ def mailbox(request, mailboxer):
     request.addfinalizer(returned.delete)
     return returned
 
+
 @pytest.fixture
 def mailboxes(mailboxer, num_objects):
     return [
         mailboxer.create_mailbox("mailbox{0}@mailboxer.com".format(i))
-        for i in range(num_objects)]
+        for i in range(num_objects)
+    ]
