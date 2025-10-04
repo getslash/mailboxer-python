@@ -28,7 +28,7 @@ authors = [{ name = "Rotem Yaari", email = "vmalloc@gmail.com" }]
 "Homepage" = "https://github.com/getslash/mailboxer-python"
 
 [project.optional-dependencies]
-testing = ["Flask-Loopback", "pylint", "pytest"]
+testing = ["dataclasses_json", "Flask-Loopback", "pylint", "pytest"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["mailboxer"]
