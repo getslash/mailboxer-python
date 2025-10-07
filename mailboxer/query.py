@@ -1,11 +1,11 @@
 import requests
 
-class Query(object):
 
+class Query:
     _metadata = None
 
     def __init__(self, client, url, objtype, page_size=100):
-        super(Query, self).__init__()
+        super().__init__()
         self.client = client
         self.url = url.set_query_param("page_size", str(page_size))
         self.objtype = objtype
@@ -14,7 +14,9 @@ class Query(object):
 
     def _fetch_page(self, page_index):
         assert page_index > 0
-        result = requests.get(self.url.set_query_param("page", str(page_index)))
+        result = requests.get(
+            self.url.set_query_param("page", str(page_index)), timeout=30
+        )
         result.raise_for_status()
         result_json = result.json()
         if self._objects is None:
@@ -28,7 +30,7 @@ class Query(object):
 
     def get_json_objects(self):
         for i in range(len(self)):
-            obj = self._objects[i]
+            assert self._objects is not None
             if self._objects[i] is None:
                 self._fetch_page((i // self.page_size) + 1)
             assert self._objects[i] is not None
@@ -37,4 +39,5 @@ class Query(object):
     def __len__(self):
         if self._objects is None:
             self._fetch_page(1)
+        assert self._objects is not None
         return len(self._objects)
